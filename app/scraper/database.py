@@ -16,7 +16,7 @@ Base.query = db_session.query_property()
 
 
 def init_db():
-    from models import Test, Employees, ScheduleRecon
+    from .models import Test, Employees, ScheduleRecon
 
     Base.metadata.tables['schedulerecon'].drop(engine)
     Base.metadata.create_all(bind=engine)

@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Boolean, DateTime, BigInteger
 from sqlalchemy.schema import PrimaryKeyConstraint
-from database import Base
+from .database import Base
 # from werkzeug.security import generate_password_hash, check_password_hash
 
 
