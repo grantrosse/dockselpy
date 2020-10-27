@@ -80,6 +80,6 @@ def phantomjs_example():
 
 
 if __name__ == '__main__':
-    chrome_example()
+    # chrome_example()
     firefox_example()
-    phantomjs_example()
+    # phantomjs_example()
