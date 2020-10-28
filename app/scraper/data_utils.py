@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-desktopPath = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+# desktopPath = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
 
 def getComparison(paycomshift, employeedata, amzlshift, debug=False):
     ##merge so we can correlate the shift data to the pladcloud email
@@ -21,5 +21,6 @@ def getComparison(paycomshift, employeedata, amzlshift, debug=False):
     output = output[output.workEmail.notnull()]
     output = output.fillna("") ##was inserting nan values causing an error for SQL insert
 
-    output.to_csv(os.path.join(desktopPath, 'comparison.csv'))  
+    # output.to_csv(os.path.join(desktopPath, 'comparison.csv'))  
+    output.to_csv('comparison.csv')  
     return output

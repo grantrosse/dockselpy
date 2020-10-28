@@ -2,7 +2,7 @@ version: "3.2"
 
 services:
   selenium:
-    build: /scraper
+    build: ./app/
     container_name: scraper
     ports:
       - 4000:4000

@@ -19,6 +19,7 @@ with open('security_questions.json') as json_file:
     security_questions = json.load(json_file)
 
 def getSession(api):
+    log.info(f'getting session for {api}')
     session = requests.Session()
     if api == 'AMZL':
         try:
@@ -64,6 +65,7 @@ class AmazonScraper(webDriver):
         self.name = 'AMZL'
 
     def getAMZLCookies(self):
+        log.info('fetching amazon cookies')
         self.driver.get("https://www.amazon.com/gp/sign-in.html")
 
         elem = self.driver.find_element_by_xpath('//*[@id="ap_email"]')
@@ -103,6 +105,7 @@ class AmazonScraper(webDriver):
             False
 
     def getReservations(self):
+        log.info('fetching amazon reservations')
         self.session = getSession(self.name)
         response = self.session.get(self.url)
         data = response.json()
@@ -122,6 +125,7 @@ class AmazonScraper(webDriver):
         return reservationArray
 
     def getShifts(self):
+        log.info('fetching amazon shifts')
         self.session = getSession(self.name)
         response = self.session.get(self.url)
         data = response.json()
@@ -157,6 +161,7 @@ class PaycomScraper(webDriver):
         self.name = 'Paycom'
 
     def getPAYCookies(self):
+        log.info('fetching paycom cookies')
         self.driver.get("https://www.paycomonline.net/v4/cl/cl-login.php")
 
         elem = self.driver.find_element_by_xpath('//*[@id="clientcode"]')
@@ -211,6 +216,7 @@ class PaycomScraper(webDriver):
             False
 
     def getEmployees(self):
+        log.info('fetching employee data')
         self.session = getSession(self.name)
         response = self.session.get(self.employeeUrl)
         data = response.json()
@@ -230,6 +236,7 @@ class PaycomScraper(webDriver):
         return paycomEmployeeArray
     
     def getShifts(self):
+        log.info('fetching paycom shift data')
         self.session = getSession(self.name)
         response = self.session.get(self.shiftUrl)
         data = response.json()   

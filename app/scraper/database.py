@@ -1,6 +1,9 @@
 from sqlalchemy import create_engine#, MetaData
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+import logging
+
+log = logging.getLogger(__name__)
 
 engine = create_engine(
     'postgresql+psycopg2://nally:Upwork924))@postgre1.cjpmfdzqif3u.us-east-1.rds.amazonaws.com:5432/postgres',
@@ -17,15 +20,16 @@ Base.query = db_session.query_property()
 
 def init_db():
     from .models import Test, Employees, ScheduleRecon
-
+    log.info('setting up db')
     Base.metadata.tables['schedulerecon'].drop(engine)
     Base.metadata.create_all(bind=engine)
-
+    
     # ScheduleRecon.query.delete()
     # db_session.commit()
 
 
 def rowInsert(table, array):
+    log.info(f'inserting into SQL: {table.__table__.name}')
     insert_query = table.__table__.insert().values(array)
     db_session.execute(insert_query)
     db_session.commit()
