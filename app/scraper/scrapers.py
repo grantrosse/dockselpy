@@ -10,9 +10,9 @@ import pandas as pd
 import json
 import os
 import logging
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 log = logging.getLogger(__name__)
 
 with open('security_questions.json') as json_file:    

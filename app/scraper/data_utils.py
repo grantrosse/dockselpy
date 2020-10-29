@@ -1,5 +1,10 @@
 import pandas as pd
 import os
+import smtplib
+from email.message import EmailMessage
+import logging
+
+log = logging.getLogger(__name__)
 
 # desktopPath = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
 
@@ -24,3 +29,29 @@ def getComparison(paycomshift, employeedata, amzlshift, debug=False):
     # output.to_csv(os.path.join(desktopPath, 'comparison.csv'))  
     output.to_csv('comparison.csv')  
     return output
+
+def sendEmail(message, success):
+    msg = EmailMessage()
+
+    sent_from = os.getenv('ERROREMAIL')
+    to = os.getenv('CLIENTEMAIL')
+    subject = f"SUCCESS - Scrape Processed for {os.getenv('CLIENTNAME')}" if success else f"CRITICAL - Scrape Failed for {os.getenv('CLIENTNAME')}"
+    body = f"Hello,\nPlease rerun scraper for {os.getenv('CLIENTNAME')}\nerror message:{message}\n\n- PLADcloud Team" if not success else f"Hello,\nScraper successfully run for {os.getenv('CLIENTNAME')}\n\n- PLADcloud Team"
+
+    msg.set_content(body)
+
+    msg['Subject'] = subject
+    msg['From'] = sent_from
+    msg['To'] = to
+
+    try:
+        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        server.ehlo()
+        server.login(os.getenv('ERROREMAIL'), os.getenv('ERROREMAILPASSWORD'))
+        server.send_message(msg)
+        server.close()
+        log.info(f"sent email to {os.getenv('CLIENTNAME')}")
+        return True
+    except:
+        log.error(f"email to {os.getenv('CLIENTNAME')} failed")
+        return False

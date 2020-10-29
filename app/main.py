@@ -4,12 +4,13 @@ from scraper.database import init_db, db_session, rowInsert
 from datetime import datetime, timedelta
 import pandas as pd
 import logging
+from dotenv import load_dotenv
 
-##create tables/set up base for ORM
+load_dotenv()
+
+#create tables/set up base for ORM
 init_db()
 from scraper.models import Test, Employees, ScheduleRecon
-
-
 
 logging.basicConfig(filename='pladlog.log',format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO)
 logging.captureWarnings(True)
@@ -23,6 +24,7 @@ AMZL = AmazonScraper(f'https://logistics.amazon.com/scheduling/home/api/v2/roste
 PAY = PaycomScraper('https://www.paycomonline.net/v4/cl/web.php/scheduling/api/manage-schedules/employee?skip=0&take=100&q=&filterInstanceId=f1f61f69ac734e5c81c3027684388a&filterName=cl-manage-scheds',\
                         f'https://www.paycomonline.net/v4/cl/web.php/scheduling/api/manage-schedules/employee-shift?startDate={fromDate}&endDate={toDate}&skip=0&take=500&q=&filterInstanceId=52766f934b3d48d8a1df9db39eb537&filterName=cl-manage-scheds&scheduleGroupCode=2237')
 
+
 try:
     if AMZL.authorize():
         amzlReservationsdf = pd.DataFrame(AMZL.getReservations())
@@ -31,10 +33,12 @@ try:
         amzlShiftsdf = pd.DataFrame(AMZL.getShifts())
         amzlShiftsdf.to_csv('amzn_shifts.csv')
     else:
-        logging.error("amazon authorization fail")        
+        logging.error("amazon authorization fail")   
+        scraper.data_utils.sendEmail("amazon authorization fail", False)     
 
 except Exception as e:
     logging.error("amzl scrape fail", exc_info = True) 
+    scraper.data_utils.sendEmail("amazon scrape fail", False)
 
 try:
     if PAY.authorize():
@@ -45,14 +49,17 @@ try:
         paycomShiftdf.to_csv('paycom_shifts.csv')
     else:
         logging.error("paycom authorization fail")
-
+        scraper.data_utils.sendEmail("paycom authorization fail", False)
+        
 except Exception as e:
-    logging.error("paycom scrape fail", exc_info = True) 
+    logging.error("paycom scrape fail", exc_info = True)
+    scraper.data_utils.sendEmail("paycom scrape fail", False) 
 
 try:
     compdf = scraper.data_utils.getComparison(paycomShiftdf, paycomEmployeedf, amzlShiftsdf, False)
 except Exception as e:
     logging.error("comparison fail", exc_info = True)
+    scraper.data_utils.sendEmail("comparison fail", False)
 
 
 
@@ -82,6 +89,6 @@ for row in compdf.itertuples():
                         })
 rowInsert(ScheduleRecon, compInsert)
 
-
+scraper.data_utils.sendEmail("successful run", True)
 
 db_session.remove()

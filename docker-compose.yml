@@ -2,8 +2,14 @@ version: "3.2"
 
 services:
   selenium:
-    build: ./app/
+    build: 
+      context: ./app/
+      dockerfile: Dockerfile-implementation
+      # dockerfile: Dockerfile
     container_name: scraper
     ports:
       - 4000:4000
     privileged: true
+    environment: 
+      - CLIENTEMAIL=grant007r@gmail.com
+      - CLIENTNAME=pladcloud
