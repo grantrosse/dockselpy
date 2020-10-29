@@ -115,6 +115,7 @@ class AmazonScraper(webDriver):
         response = self.session.get(self.url)
         print(response.request)
         print(response.request.headers)
+        print('----------------')
         print(response.request.url)
         print(response.text)
         print('-------------')
