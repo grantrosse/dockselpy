@@ -1,8 +1,12 @@
 import pandas as pd
 import os
 import smtplib
+import imaplib
+import email
+import re
 from email.message import EmailMessage
 import logging
+from .scrapers import webDriver
 
 log = logging.getLogger(__name__)
 
@@ -55,3 +59,23 @@ def sendEmail(message, success):
     except:
         log.error(f"email to {os.getenv('CLIENTNAME')} failed")
         return False
+
+def getApprovalLink():
+    mail = imaplib.IMAP4_SSL('imap.gmail.com')
+    mail.login(os.getenv('EMAIL'), os.getenv('PASS'))
+    mail.select("inbox") 
+    result, data = mail.search(None, '(FROM "account-update@amazon.com" UNSEEN)' )
+
+    ids = data[0] # data is a list.
+    id_list = ids.split() # ids is a space separated string
+    latest_email_id = id_list[-1] # get the latest
+    result, data = mail.fetch(latest_email_id, "(RFC822)") 
+    raw_email = data[0][1]
+    msg = email.message_from_bytes(data[0][1])
+
+    nospaces = "".join(str(msg).split())
+    link = re.search(r'(https://www.amazon.com/a/c/r\?.+)</a',nospaces).group(1)
+
+    mail.close()
+
+    return link

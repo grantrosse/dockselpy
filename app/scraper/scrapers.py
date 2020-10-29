@@ -10,6 +10,7 @@ import pandas as pd
 import json
 import os
 import logging
+from .data_utils import getApprovalLink
 # from dotenv import load_dotenv
 
 # load_dotenv()
@@ -83,20 +84,19 @@ class AmazonScraper(webDriver):
         self.driver.get("https://www.amazon.com/gp/sign-in.html")
 
         time.sleep(5)
-        print(self.driver.page_source)
 
         elem = self.driver.find_element_by_xpath('//*[@id="ap_email"]')
-        print(elem)
         elem.send_keys(os.getenv('EMAIL'))
         elem.send_keys(Keys.RETURN)
-
         time.sleep(5)
 
         elem = self.driver.find_element_by_xpath('//*[@id="ap_password"]')
-        print(elem)
         elem.send_keys(os.getenv('PASS'))
         elem.send_keys(Keys.RETURN)
         time.sleep(5)
+
+        approvalURL = getApprovalLink()
+        print(approvalURL)
 
         cookies = self.driver.get_cookies()
         print(cookies)
