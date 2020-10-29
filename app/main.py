@@ -42,28 +42,28 @@ except Exception as e:
     scraper.data_utils.sendEmail("amazon scrape fail", False)
     AMZL.driver.quit()
 
-try:
-    if PAY.authorize():
-        paycomEmployeedf = pd.DataFrame(PAY.getEmployees())
-        paycomEmployeedf.to_csv('paycom_employees.csv')
+# try:
+#     if PAY.authorize():
+#         paycomEmployeedf = pd.DataFrame(PAY.getEmployees())
+#         paycomEmployeedf.to_csv('paycom_employees.csv')
 
-        paycomShiftdf = pd.DataFrame(PAY.getShifts())
-        paycomShiftdf.to_csv('paycom_shifts.csv')
-    else:
-        logging.error("paycom authorization fail")
-        scraper.data_utils.sendEmail("paycom authorization fail", False)
-        PAY.driver.quit()
+#         paycomShiftdf = pd.DataFrame(PAY.getShifts())
+#         paycomShiftdf.to_csv('paycom_shifts.csv')
+#     else:
+#         logging.error("paycom authorization fail")
+#         scraper.data_utils.sendEmail("paycom authorization fail", False)
+#         PAY.driver.quit()
         
-except Exception as e:
-    logging.error("paycom scrape fail", exc_info = True)
-    scraper.data_utils.sendEmail("paycom scrape fail", False) 
-    PAY.driver.quit()
+# except Exception as e:
+#     logging.error("paycom scrape fail", exc_info = True)
+#     scraper.data_utils.sendEmail("paycom scrape fail", False) 
+#     PAY.driver.quit()
 
-try:
-    compdf = scraper.data_utils.getComparison(paycomShiftdf, paycomEmployeedf, amzlShiftsdf, False)
-except Exception as e:
-    logging.error("comparison fail", exc_info = True)
-    scraper.data_utils.sendEmail("comparison fail", False)
+# try:
+#     compdf = scraper.data_utils.getComparison(paycomShiftdf, paycomEmployeedf, amzlShiftsdf, False)
+# except Exception as e:
+#     logging.error("comparison fail", exc_info = True)
+#     scraper.data_utils.sendEmail("comparison fail", False)
 
 
 
@@ -80,18 +80,18 @@ except Exception as e:
 #                             })
 # rowInsert(Employees, employeeInsert)
 
-compInsert = []
-for row in compdf.itertuples():
-    compInsert.append({'startDate': row.startDate, #datetime.strptime(row.startDate, '%m/%d/%Y %H:%M:%S'),
-                        'email': row.workEmail,
-                        'firstName': row.firstName,
-                        'lastName': row.lastName,
-                        'shiftDescription': row.description,
-                        'phoneNumber': row.primaryPhone,
-                        'personalEmail': row.personalEmail,
-                        'amazonShiftType': row.shiftName,
-                        })
-rowInsert(ScheduleRecon, compInsert)
+# compInsert = []
+# for row in compdf.itertuples():
+#     compInsert.append({'startDate': row.startDate, #datetime.strptime(row.startDate, '%m/%d/%Y %H:%M:%S'),
+#                         'email': row.workEmail,
+#                         'firstName': row.firstName,
+#                         'lastName': row.lastName,
+#                         'shiftDescription': row.description,
+#                         'phoneNumber': row.primaryPhone,
+#                         'personalEmail': row.personalEmail,
+#                         'amazonShiftType': row.shiftName,
+#                         })
+# rowInsert(ScheduleRecon, compInsert)
 
 scraper.data_utils.sendEmail("successful run", True)
 
