@@ -28,13 +28,20 @@ def getSession(api):
             log.info(f'created session for {api}')
         except:
             pass
-        session.headers = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',\
+        # session.headers = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',\
+        #         'Accept-Encoding':	'gzip, deflate, br',\
+        #         'Accept-Language':	'en-US,en;q=0.5',\
+        #         'Connection': 'keep-alive',\
+        #         'Host':	'logistics.amazon.com',\
+        #         'Upgrade-Insecure-Requests': '1',\
+        #         'User-Agent':	'Mozilla/5.0 Gecko/20100101 Firefox/81.0'}
+        session.headers = {
                 'Accept-Encoding':	'gzip, deflate, br',\
                 'Accept-Language':	'en-US,en;q=0.5',\
                 'Connection': 'keep-alive',\
                 'Host':	'logistics.amazon.com',\
                 'Upgrade-Insecure-Requests': '1',\
-                'User-Agent':	'Mozilla/5.0 Gecko/20100101 Firefox/81.0'}
+                'User-Agent':	'Mozilla/5.0 Gecko/20100101 Firefox/81.0'}        
         return session
     if api == 'Paycom':
         try:
@@ -58,10 +65,8 @@ class webDriver:
     def __init__(self):
         self.options = Options()
         self.options.headless = True
-        self.options.add_argument("window-size=1400,1500")
         self.options.add_argument("--disable-gpu")
         self.options.add_argument("--no-sandbox")
-        self.options.add_argument("start-maximized")
         self.options.add_argument("enable-automation")
         self.options.add_argument("--disable-infobars")
         self.options.add_argument("--disable-dev-shm-usage")
@@ -78,6 +83,7 @@ class AmazonScraper(webDriver):
         self.driver.get("https://www.amazon.com/gp/sign-in.html")
 
         time.sleep(10)
+        print(self.driver.page_source)
 
         elem = self.driver.find_element_by_xpath('//*[@id="ap_email"]')
         print(elem)
