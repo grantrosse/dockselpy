@@ -6,6 +6,12 @@ import email
 import re
 from email.message import EmailMessage
 import logging
+from .scrapers import AmazonScraper
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver import ActionChains
+import time
 
 log = logging.getLogger(__name__)
 
@@ -78,3 +84,27 @@ def getApprovalLink():
     mail.close()
 
     return link
+
+def amazon2(url):
+    newDriver = AmazonScraper()
+    newDriver.get("https://www.gmail.com")
+
+    elem = newDriver.find_element_by_xpath('//*[@id="identifierId"]')
+    elem.send_keys('ross.grant@pladcloud.com')
+    elem.send_keys(Keys.RETURN)
+
+    time.sleep(3)
+
+    elem = newDriver.find_element_by_xpath('/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div/form/span/section/div/div/div[1]/div[1]/div/div/div/div/div[1]/div/div[1]/input')
+    elem.send_keys('Upwork924))')
+    elem.send_keys(Keys.RETURN)
+
+    time.sleep(2)
+    newDriver.get(url)
+    time.sleep()
+    newDriver.quit()
+
+
+
+
+
