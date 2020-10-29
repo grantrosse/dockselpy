@@ -25,39 +25,39 @@ PAY = PaycomScraper('https://www.paycomonline.net/v4/cl/web.php/scheduling/api/m
                         f'https://www.paycomonline.net/v4/cl/web.php/scheduling/api/manage-schedules/employee-shift?startDate={fromDate}&endDate={toDate}&skip=0&take=500&q=&filterInstanceId=52766f934b3d48d8a1df9db39eb537&filterName=cl-manage-scheds&scheduleGroupCode=2237')
 
 
-try:
-    if AMZL.authorize():
-        amzlReservationsdf = pd.DataFrame(AMZL.getReservations())
-        amzlReservationsdf.to_csv('amzn_reservations.csv')
-
-        amzlShiftsdf = pd.DataFrame(AMZL.getShifts())
-        amzlShiftsdf.to_csv('amzn_shifts.csv')
-    else:
-        logging.error("amazon authorization fail")   
-        scraper.data_utils.sendEmail("amazon authorization fail", False)   
-        AMZL.driver.quit()  
-
-except Exception as e:
-    logging.error("amzl scrape fail", exc_info = True) 
-    # scraper.data_utils.sendEmail("amazon scrape fail", False)
-    AMZL.driver.quit()
-
 # try:
-#     if PAY.authorize():
-#         paycomEmployeedf = pd.DataFrame(PAY.getEmployees())
-#         paycomEmployeedf.to_csv('paycom_employees.csv')
+#     if AMZL.authorize():
+#         amzlReservationsdf = pd.DataFrame(AMZL.getReservations())
+#         amzlReservationsdf.to_csv('amzn_reservations.csv')
 
-#         paycomShiftdf = pd.DataFrame(PAY.getShifts())
-#         paycomShiftdf.to_csv('paycom_shifts.csv')
+#         amzlShiftsdf = pd.DataFrame(AMZL.getShifts())
+#         amzlShiftsdf.to_csv('amzn_shifts.csv')
 #     else:
-#         logging.error("paycom authorization fail")
-#         scraper.data_utils.sendEmail("paycom authorization fail", False)
-#         PAY.driver.quit()
-        
+#         logging.error("amazon authorization fail")   
+#         scraper.data_utils.sendEmail("amazon authorization fail", False)   
+#         AMZL.driver.quit()  
+
 # except Exception as e:
-#     logging.error("paycom scrape fail", exc_info = True)
-#     scraper.data_utils.sendEmail("paycom scrape fail", False) 
-#     PAY.driver.quit()
+#     logging.error("amzl scrape fail", exc_info = True) 
+#     # scraper.data_utils.sendEmail("amazon scrape fail", False)
+#     AMZL.driver.quit()
+
+try:
+    if PAY.authorize():
+        paycomEmployeedf = pd.DataFrame(PAY.getEmployees())
+        paycomEmployeedf.to_csv('paycom_employees.csv')
+
+        paycomShiftdf = pd.DataFrame(PAY.getShifts())
+        paycomShiftdf.to_csv('paycom_shifts.csv')
+    else:
+        logging.error("paycom authorization fail")
+        scraper.data_utils.sendEmail("paycom authorization fail", False)
+        PAY.driver.quit()
+        
+except Exception as e:
+    logging.error("paycom scrape fail", exc_info = True)
+    scraper.data_utils.sendEmail("paycom scrape fail", False) 
+    PAY.driver.quit()
 
 # try:
 #     compdf = scraper.data_utils.getComparison(paycomShiftdf, paycomEmployeedf, amzlShiftsdf, False)
