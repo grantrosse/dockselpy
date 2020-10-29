@@ -98,8 +98,12 @@ class AmazonScraper(webDriver):
         approvalURL = getApprovalLink()
         print(approvalURL)
 
+        self.driver.get(approvalURL)
+        time.sleep(2)
+        print(self.driver.page_source)
+
         cookies = self.driver.get_cookies()
-        # print(cookies)
+        print(cookies)
 
         for cookie in cookies:
             self.session.cookies.set(cookie['name'], cookie['value'])
