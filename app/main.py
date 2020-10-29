@@ -34,11 +34,13 @@ try:
         amzlShiftsdf.to_csv('amzn_shifts.csv')
     else:
         logging.error("amazon authorization fail")   
-        scraper.data_utils.sendEmail("amazon authorization fail", False)     
+        scraper.data_utils.sendEmail("amazon authorization fail", False)   
+        AMZL.driver.quit()  
 
 except Exception as e:
     logging.error("amzl scrape fail", exc_info = True) 
     scraper.data_utils.sendEmail("amazon scrape fail", False)
+    AMZL.driver.quit()
 
 try:
     if PAY.authorize():
@@ -50,10 +52,12 @@ try:
     else:
         logging.error("paycom authorization fail")
         scraper.data_utils.sendEmail("paycom authorization fail", False)
+        PAY.driver.quit()
         
 except Exception as e:
     logging.error("paycom scrape fail", exc_info = True)
     scraper.data_utils.sendEmail("paycom scrape fail", False) 
+    PAY.driver.quit()
 
 try:
     compdf = scraper.data_utils.getComparison(paycomShiftdf, paycomEmployeedf, amzlShiftsdf, False)
