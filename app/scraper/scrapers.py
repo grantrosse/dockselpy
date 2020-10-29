@@ -101,6 +101,7 @@ class AmazonScraper(webDriver):
                 self.session.close()
                 return True
             except:
+                log.info('starting AMZN scraper')
                 self.getAMZLCookies()
                 return True
         except:
