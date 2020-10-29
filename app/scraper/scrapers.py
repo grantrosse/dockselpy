@@ -70,7 +70,7 @@ class AmazonScraper(webDriver):
         log.info('fetching amazon cookies')
         self.driver.get("https://www.amazon.com/gp/sign-in.html")
 
-        time.sleep(5)
+        time.sleep(10)
 
         elem = self.driver.find_element_by_xpath('//*[@id="ap_email"]')
         elem.send_keys(os.getenv('EMAIL'))
