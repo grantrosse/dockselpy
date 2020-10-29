@@ -73,6 +73,7 @@ class AmazonScraper(webDriver):
         time.sleep(10)
 
         elem = self.driver.find_element_by_xpath('//*[@id="ap_email"]')
+        print(elem)
         elem.send_keys(os.getenv('EMAIL'))
         elem.send_keys(Keys.RETURN)
 
