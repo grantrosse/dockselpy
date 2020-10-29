@@ -111,6 +111,7 @@ class AmazonScraper(webDriver):
         print(response.request)
         print(response.request.headers)
         print(response.request.url)
+        print(response.text)
         print('-------------')
         data = response.json()
         reservationArray = []
