@@ -39,7 +39,7 @@ try:
 
 except Exception as e:
     logging.error("amzl scrape fail", exc_info = True) 
-    scraper.data_utils.sendEmail("amazon scrape fail", False)
+    # scraper.data_utils.sendEmail("amazon scrape fail", False)
     AMZL.driver.quit()
 
 # try:

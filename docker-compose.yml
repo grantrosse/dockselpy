@@ -7,8 +7,9 @@ services:
       dockerfile: Dockerfile-implementation
       # dockerfile: Dockerfile
     container_name: scraper
-    ports:
-      - 4000:4000
+    network_mode: 'host'
+    # ports:
+    #   - 4000:4000
     privileged: true
     environment: 
       - CLIENTEMAIL=grant007r@gmail.com

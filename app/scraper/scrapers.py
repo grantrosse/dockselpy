@@ -25,6 +25,7 @@ def getSession(api):
         try:
             with open('cookies_AMZL.pkl', 'rb') as f:
                 session.cookies.update(pickle.load(f))
+            log.info(f'created session for {api}')
         except:
             pass
         session.headers = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',\
@@ -39,6 +40,7 @@ def getSession(api):
         try:
             with open('cookies_Paycom.pkl', 'rb') as f:
                 session.cookies.update(pickle.load(f))
+            log.info(f'created session for {api}')
         except:
             pass
         session.headers = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
