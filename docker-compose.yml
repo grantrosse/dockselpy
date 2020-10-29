@@ -4,8 +4,8 @@ services:
   selenium:
     build: 
       context: ./app/
-      # dockerfile: Dockerfile-implementation
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-implementation
+      # dockerfile: Dockerfile
     container_name: scraper
     network_mode: 'host'
     # ports:
