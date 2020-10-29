@@ -33,7 +33,7 @@ def getSession(api):
                 'Connection': 'keep-alive',\
                 'Host':	'logistics.amazon.com',\
                 'Upgrade-Insecure-Requests': '1',\
-                'User-Agent':	'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:81.0) Gecko/20100101 Firefox/81.0'}
+                'User-Agent':	'Mozilla/5.0 Gecko/20100101 Firefox/81.0'}
         return session
     if api == 'Paycom':
         try:
