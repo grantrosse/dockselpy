@@ -66,11 +66,11 @@ class webDriver:
     def __init__(self):
         self.options = Options()
         self.options.headless = True
-        # self.options.add_argument("--disable-gpu")
-        # self.options.add_argument("--no-sandbox")
-        # self.options.add_argument("enable-automation")
-        # self.options.add_argument("--disable-infobars")
-        # self.options.add_argument("--disable-dev-shm-usage")
+        self.options.add_argument("--disable-gpu")
+        self.options.add_argument("--no-sandbox")
+        self.options.add_argument("enable-automation")
+        self.options.add_argument("--disable-infobars")
+        self.options.add_argument("--disable-dev-shm-usage")
         self.driver = webdriver.Firefox(options=self.options)
 
 class AmazonScraper(webDriver):
