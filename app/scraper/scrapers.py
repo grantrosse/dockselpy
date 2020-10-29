@@ -84,6 +84,7 @@ class AmazonScraper(webDriver):
         time.sleep(10)
 
         cookies = self.driver.get_cookies()
+        print(cookies)
 
         for cookie in cookies:
             self.session.cookies.set(cookie['name'], cookie['value'])
