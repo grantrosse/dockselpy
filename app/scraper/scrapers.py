@@ -108,6 +108,8 @@ class AmazonScraper(webDriver):
         log.info('fetching amazon reservations')
         self.session = getSession(self.name)
         response = self.session.get(self.url)
+        print(response.request)
+        print('-------------')
         data = response.json()
         reservationArray = []
 
