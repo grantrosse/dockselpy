@@ -6,7 +6,6 @@ import email
 import re
 from email.message import EmailMessage
 import logging
-from .scrapers import webDriver
 
 log = logging.getLogger(__name__)
 
