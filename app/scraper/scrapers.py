@@ -82,7 +82,7 @@ class AmazonScraper(webDriver):
         log.info('fetching amazon cookies')
         self.driver.get("https://www.amazon.com/gp/sign-in.html")
 
-        time.sleep(10)
+        time.sleep(5)
         print(self.driver.page_source)
 
         elem = self.driver.find_element_by_xpath('//*[@id="ap_email"]')
@@ -93,9 +93,10 @@ class AmazonScraper(webDriver):
         time.sleep(5)
 
         elem = self.driver.find_element_by_xpath('//*[@id="ap_password"]')
+        print(elem)
         elem.send_keys(os.getenv('PASS'))
         elem.send_keys(Keys.RETURN)
-        time.sleep(15)
+        time.sleep(5)
 
         cookies = self.driver.get_cookies()
         print(cookies)
