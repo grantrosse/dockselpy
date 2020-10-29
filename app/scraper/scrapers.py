@@ -107,6 +107,8 @@ class AmazonScraper(webDriver):
     def getReservations(self):
         log.info('fetching amazon reservations')
         self.session = getSession(self.name)
+        print(self.url)
+        print('----------')
         response = self.session.get(self.url)
         print(response.request)
         print(response.request.headers)
