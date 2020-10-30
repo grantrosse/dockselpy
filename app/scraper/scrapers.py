@@ -103,7 +103,7 @@ class AmazonScraper(webDriver):
         client = Client(os.getenv('TWILIO_SID'), os.getenv('TWILIO_TOKEN'))
         message = client.messages \
             .create(
-                    body="click here: test",
+                    body=f"click here: {approvalURL}",
                     from_='+12512930141',
                     to='+19788532190'
                 )
