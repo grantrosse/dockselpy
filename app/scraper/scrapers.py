@@ -106,7 +106,8 @@ class AmazonScraper(webDriver):
 
         self.driver.refresh()
         time.sleep(2)
-        print(self.driver.page_source)
+        self.driver.refresh()
+        # print(self.driver.page_source)
 
         cookies = self.driver.get_cookies()
         print(cookies)
@@ -134,9 +135,13 @@ class AmazonScraper(webDriver):
         elem.send_keys('Upwork924))')
         elem.send_keys(Keys.RETURN)
 
-        time.sleep(2)
+
+        time.sleep(5)
+        print(newDriver.page_source)
+
         newDriver.get(url)
-        time.sleep()
+        time.sleep(5)
+        print(newDriver.page_source)
         newDriver.quit()
 
     def authorize(self):
