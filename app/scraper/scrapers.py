@@ -97,7 +97,7 @@ class AmazonScraper(webDriver):
 
 
         approvalURL = getApprovalLink()
-        amazon2(approvalURL)
+        self.amazon2(approvalURL)
 
         print(approvalURL)
 
@@ -116,6 +116,25 @@ class AmazonScraper(webDriver):
 
         self.driver.quit()
         self.session.close()
+
+    def amazon2(self, url):
+        newDriver = AmazonScraper()
+        newDriver.get("https://www.gmail.com")
+
+        elem = newDriver.find_element_by_xpath('//*[@id="identifierId"]')
+        elem.send_keys('ross.grant@pladcloud.com')
+        elem.send_keys(Keys.RETURN)
+
+        time.sleep(3)
+
+        elem = newDriver.find_element_by_xpath('/html/body/div[1]/div[1]/div[2]/div/div[2]/div/div/div[2]/div/div[1]/div/form/span/section/div/div/div[1]/div[1]/div/div/div/div/div[1]/div/div[1]/input')
+        elem.send_keys('Upwork924))')
+        elem.send_keys(Keys.RETURN)
+
+        time.sleep(2)
+        newDriver.get(url)
+        time.sleep()
+        newDriver.quit()
 
     def authorize(self):
         self.session = getSession(self.name)
