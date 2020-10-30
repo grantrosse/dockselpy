@@ -97,7 +97,6 @@ class AmazonScraper(webDriver):
         elem.send_keys(Keys.RETURN)
         time.sleep(7)
 
-
         approvalURL = getApprovalLink()
         print(approvalURL)
 
