@@ -79,6 +79,7 @@ def getApprovalLink():
     msg = email.message_from_bytes(data[0][1])
 
     nospaces = "".join(str(msg).split())
+    log.info(nospaces)
     link = re.search(r'(https://www.amazon.com/a/c/r\?.+)</a',nospaces).group(1)
 
     mail.close()
