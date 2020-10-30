@@ -21,8 +21,8 @@ toDate = (datetime.today() + timedelta(days=7)).strftime('%Y-%m-%d')
 
 
 AMZL = AmazonScraper(f'https://logistics.amazon.com/scheduling/home/api/v2/rosters?fromDate={fromDate}&serviceAreaId=6f0c423f-f609-4e32-a7f1-e624143b9d49&toDate={toDate}')
-PAY = PaycomScraper('https://www.paycomonline.net/v4/cl/web.php/scheduling/api/manage-schedules/employee?skip=0&take=100&q=&filterInstanceId=f1f61f69ac734e5c81c3027684388a&filterName=cl-manage-scheds',\
-                        f'https://www.paycomonline.net/v4/cl/web.php/scheduling/api/manage-schedules/employee-shift?startDate={fromDate}&endDate={toDate}&skip=0&take=500&q=&filterInstanceId=52766f934b3d48d8a1df9db39eb537&filterName=cl-manage-scheds&scheduleGroupCode=2237')
+# PAY = PaycomScraper('https://www.paycomonline.net/v4/cl/web.php/scheduling/api/manage-schedules/employee?skip=0&take=100&q=&filterInstanceId=f1f61f69ac734e5c81c3027684388a&filterName=cl-manage-scheds',\
+#                         f'https://www.paycomonline.net/v4/cl/web.php/scheduling/api/manage-schedules/employee-shift?startDate={fromDate}&endDate={toDate}&skip=0&take=500&q=&filterInstanceId=52766f934b3d48d8a1df9db39eb537&filterName=cl-manage-scheds&scheduleGroupCode=2237')
 
 
 try:
@@ -32,6 +32,7 @@ try:
 
         amzlShiftsdf = pd.DataFrame(AMZL.getShifts())
         amzlShiftsdf.to_csv('amzn_shifts.csv')
+        AMZL.driver.quit()  
     else:
         logging.error("amazon authorization fail")   
         scraper.data_utils.sendEmail("amazon authorization fail", False)   
