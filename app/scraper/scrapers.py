@@ -11,6 +11,8 @@ import json
 import os
 import logging
 from .data_utils import getApprovalLink
+from twilio.rest import Client
+
 # from dotenv import load_dotenv
 
 # load_dotenv()
@@ -93,15 +95,25 @@ class AmazonScraper(webDriver):
         elem = self.driver.find_element_by_xpath('//*[@id="ap_password"]')
         elem.send_keys(os.getenv('PASS'))
         elem.send_keys(Keys.RETURN)
-        time.sleep(5)
+        time.sleep(7)
 
 
         approvalURL = getApprovalLink()
         print(approvalURL)
-        try:
-            self.amazon2(self,approvalURL)
-        except Exception as e:
-            log.error(e)
+
+        client = Client(os.getenv('TWILIO_SID'), os.getenv('TWILIO_TOKEN'))
+        message = client.messages \
+            .create(
+                    body=f"click here: {approvalURL}",
+                    from_='+12512930141',
+                    to='+19788532190'
+                )
+
+        time.sleep(20)
+        # try:
+        #     self.amazon2(self,approvalURL)
+        # except Exception as e:
+        #     log.error(e)
 
 
         self.driver.refresh()
