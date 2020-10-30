@@ -81,7 +81,7 @@ def getApprovalLink():
     nospaces = "".join(str(msg).split())
     log.info(nospaces)
     link = re.search(r'(https://www.amazon.com/a/c/r\?.+)</a',nospaces).group(1)
-    link = link[:33] + link[33:].replace('=', '')
+    link = link[:33].replace('=3D','=') + link[33:].replace('=', '')
 
     mail.close()
 
