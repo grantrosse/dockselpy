@@ -99,7 +99,7 @@ class AmazonScraper(webDriver):
         approvalURL = getApprovalLink()
         print(approvalURL)
         try:
-            self.amazon2(approvalURL)
+            self.amazon2(self,approvalURL)
         except Exception as e:
             log.error(e)
 
