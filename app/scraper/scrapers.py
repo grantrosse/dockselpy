@@ -10,7 +10,7 @@ import pandas as pd
 import json
 import os
 import logging
-from .data_utils import getApprovalLink, amazon2
+from .data_utils import getApprovalLink
 # from dotenv import load_dotenv
 
 # load_dotenv()
@@ -97,9 +97,12 @@ class AmazonScraper(webDriver):
 
 
         approvalURL = getApprovalLink()
-        self.amazon2(approvalURL)
-
         print(approvalURL)
+        try:
+            self.amazon2(approvalURL)
+        except Exception as e:
+            log.error(e)
+
 
         self.driver.refresh()
         time.sleep(2)
